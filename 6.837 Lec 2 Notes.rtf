@@ -1,0 +1,175 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 Helvetica-Oblique;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\margl1440\margr1440\vieww28600\viewh18000\viewkind1
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Bezier Curves and Splines 
+\f1\b0 \
+\
+\ul Curve segments in 2D\ulnone \
+\
+Motivation: 2d shapes and line segments are hard to use in design, so \'85\
+Higher level representation of curves and surfaces that can generate lines/triangles easily\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \ul \ulc0 Line \
+\ulnone gamma(t) = (gamma_x(t), gamma_y(t))\
+\
+gamma(t) = gamma_0 + t*d\
+\
+\ul Circle\ulnone \
+gamma(t) = (sin(t), cos(t))\
+\
+\ul Surface\ulnone \
+Beta(u,v) = (Beta_x(u,v), Beta_y(u,v), Beta_z(u,v))\
+\
+\ul Alternative: Implicit Models\ulnone \
+\{(x, y) such that f(x, y) - 0\}\
+\
+\ul Goal: Modeling Smooth Curves\ulnone  \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	\uc0\u8226 	}Ease of editing\
+{\listtext	\uc0\u8226 	}Conversion to poly line\
+{\listtext	\uc0\u8226 	}Extensibility to surfaces\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f0\b Polylines
+\f1\b0 : easy to store, easy to render, hard to smooth + edit\
+\
+Demands: \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	\uc0\u8226 	}Expressiveness: can approximate most shapes\
+{\listtext	\uc0\u8226 	}Simplicity: easy to deal w computationally and in user interfaces \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+
+\f0\b Splines
+\f1\b0 : a type of smooth curve in 2D/3D\
+Uses:\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	\uc0\u8226 	}2D illustration\
+{\listtext	\uc0\u8226 	}Fonts\
+{\listtext	\uc0\u8226 	}3D modeling\
+{\listtext	\uc0\u8226 	}Animation: trajectories\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+User specifies
+\f0\b  control points
+\f1\b0 \
+Interpolate control points by a smooth curve\
+x(t), y(t), z(t) piecewise polynomials\
+\
+\
+\
+\
+Basis Functions: see vocab\
+-> can be represented with coefficient vectors\
+\
+1D Problem: Interpolation \
+Computational problem especially as we increase degree of polynomial \
+Solution: Specify points and slopes\
+Degree polynomial necessary : 3\
+4 DOFs: 2 points, 2 slopes\
+\
+Cubic Interpolation: Monomial Basis \
+P(t) = at^3 + bt^2 + ct + d\
+P(t) = 3at^2 + 2bt + c\
+\
+P(0) = d = h_0 \
+P(1) = a + b + c + d = h_1\
+\
+P\'92(0) = c = h_2\
+P\'92(1) = 3a + 2b + c = h_3\
+\
+Matrix Representation -> inverse -> \
+Matrix equations (check slides)\
+\
+Monomials => Matrix => Hermit Basis\
+\
+\ul Easy to use cubic basis \ulnone \
+P(t) = P(0)H_0(t) + P(1)*H_1(t) + \'85\
+\
+\ul \
+More than 1D\ulnone \
+gamma(t) = (gamma_0(t), gamma_1(t))\
+\
+gamma\'92(t)  =  (gamma_0\'92(t), gamma_1\'92(t))\
+Tangent     =                 slopes\
+\
+\ul Method to sample points on cubic curve :\
+\ulnone Cubic Blossom: can be constructed for any cubic polynomial function, F \ul \
+\ulnone f(t) cubic polynomial -> F(t1, t2, t3)\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls4\ilvl0\cf0 {\listtext	\uc0\u8226 	}Symmetric Property \
+{\listtext	\uc0\u8226 	}Affine Property \
+{\listtext	\uc0\u8226 	}Diagonal Property\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+f\'92t(t) = 1 -> F(t1, t2, t3) = 1\
+\
+f\'92t(t) = t ->  F(t1, t2, t3) = 1/3(t1 + t2 + t3)\
+\
+f\'92t(t) = t^2 ->  F(t1, t2, t3) = 1/3(t1*t2 + t2*t3 + t3*t1)\
+\
+f\'92t(t) = t^3 ->  F(t1, t2, t3) = t1*t2*t3\
+\
+Obtain by: \
+Start w a cubic curve and compute its blossom \
+Compute: F(0, 0, 0) = f(0) , F(0, 0, 1) , F(0, 1, 1), F(1, 1, 1) = f(1) \
+\
+
+\f0\b De Casteljau\'92s Algorithm \
+
+\f1\b0 \
+\ul \ulc0 Berenstein Polynomials\
+\ulnone B_0(t) = (1 - t)^3\
+B_1(t) = 3t(1 - t)^2\
+B_2(t) = 3t^2(1 - t)\
+B_3(t) = t^3\
+\
+\ul Review\ulnone \
+Cubic Polynomials form a 4D vector space\
+Berenstain basis is canonical for Bezier\
+Hermite basis is canonical for points and tangents\
+We can change between bases with matrices\
+\
+\
+\ul Vocab\ulnone \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\i \cf0 Manifold
+\f1\i0 : shape that appears as a plane when zoomed in on\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f2\i \cf0 primitives: 
+\f1\i0 simple shapes/stuff
+\f2\i \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Rasterization:
+\f1\i0  procedure of converting vector graphics to pixel image grid
+\f2\i \
+Tessellatiion:
+\f1\i0  \
+
+\f2\i Basis functions:
+\f0\i0\b  
+\f1\b0 a set of functions phi_i(t) spanning a set of curves expressible as Sum_i a_i*phi_i(t)\ul \
+\
+Longer Curves\
+\
+\
+\
+EX:\ulnone   3t^3 - t + 1\
+Find Cubic Blossom\
+\
+}

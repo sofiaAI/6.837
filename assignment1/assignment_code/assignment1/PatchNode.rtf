@@ -1,0 +1,48 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Papyrus;}
+{\colortbl;\red255\green255\blue255;\red85\green142\blue40;}
+{\*\expandedcolortbl;;\cssrgb\c39975\c61335\c20601;}
+\margl1440\margr1440\vieww19780\viewh14460\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 #ifndef PATCH_NODE_H_\
+#define PATCH_NODE_H_\
+\
+#include <string>\
+#include <vector>\
+\
+#include "gloo/SceneNode.hpp"\
+#include "gloo/VertexObject.hpp"\
+#include "gloo/shaders/ShaderProgram.hpp"\
+\
+#include "CurveNode.hpp"\
+\
+namespace GLOO \{\
+struct PatchPoint \{\
+  glm::vec3 P;\
+  glm::vec3 N;\
+\};\
+\
+class PatchNode : public SceneNode \{\
+ public:\
+  PatchNode(std::vector<glm::vec3> points, SplineBasis basis);\
+\
+ private:\
+  void PlotPatch();\
+  float GetPosition(float u, float v, int dim);\
+  glm::vec3 GetNormal(float u, float v);\
+\
+  int FlattenCoords(int u, int v);\
+  PatchPoint EvalPatch(float u, float v);\
+  std::vector<glm::mat4> Gs_;\
+  SplineBasis spline_basis_;\
+\
+  std::shared_ptr<VertexObject> patch_mesh_;\
+  std::shared_ptr<ShaderProgram> shader_;\
+\
+  const int N_SUBDIV_ = 50;\
+\};\
+\}  // namespace GLOO\
+\
+#endif\
+}
